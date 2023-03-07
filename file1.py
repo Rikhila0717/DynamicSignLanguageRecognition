@@ -44,34 +44,6 @@ def draw_styled_landmarks(image, results):
                              mp_drawing.DrawingSpec(color=(245,66,230), thickness=2, circle_radius=2)
                              ) 
 
-
-#access webcam using opencv
-'''cap = cv2.VideoCapture(0)
-# Set mediapipe model 
-with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
-    while cap.isOpened():
-
-        # Read feed
-        ret, frame = cap.read()
-
-        # Make detections
-        image, results = mediapipe_detection(frame, holistic)
-        #print(results)
-        
-        # Draw landmarks
-        draw_styled_landmarks(image, results)
-
-        # Show to screen
-        cv2.imshow('OpenCV Feed', image)
-
-        # Break gracefully
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
-    cap.release()
-    cv2.destroyAllWindows()
-
-plt.imshow(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))'''
-
 #Extracting Key point values
 def extract_keypoints(results):
     pose = np.array([[res.x, res.y, res.z, res.visibility] for res in results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(33*4)
@@ -84,21 +56,20 @@ def extract_keypoints(results):
 
 
 #Setting up folders for extracted values
-
 # Path for exported data, numpy arrays
 DATA_PATH = os.path.join('MP_Data') 
 
 # Actions that we try to detect
-actions = np.array(['hello', 'thanks', 'iloveyou'])
+actions = np.array(['hello', 'thanks', 'please'])
 
 # Thirty videos worth of data
-no_sequences = 30
+no_sequences = 15
 
 # Videos are going to be 30 frames in length
 sequence_length = 30
 
 # Folder start
-start_folder = 30
+start_folder = 15
 
 for action in actions:
     for sequence in range(no_sequences):
@@ -109,6 +80,7 @@ for action in actions:
 
 
 cap = cv2.VideoCapture(0)
+'''
 # Set mediapipe model 
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     
@@ -155,9 +127,10 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                     
     cap.release()
     cv2.destroyAllWindows()
+    
 
 result_test = extract_keypoints(results)
-print(result_test)
+print(result_test)'''
 
 label_map = {label:num for num, label in enumerate(actions)}
 
@@ -182,7 +155,7 @@ label_map = {label:num for num, label in enumerate(actions)}
 print(label_map)
 
 
-sequences, labels = [], []
+'''sequences, labels = [], []
 for action in actions:
     for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
         window = []
@@ -192,10 +165,13 @@ for action in actions:
         sequences.append(window)
         labels.append(label_map[action])
 print(np.array(sequences).shape)
+'''
 
 X = np.array(sequences)
 y = to_categorical(labels).astype(int)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05)
+
+
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
@@ -209,11 +185,43 @@ model.add(LSTM(64, return_sequences=False, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(actions.shape[0], activation='softmax'))
-model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
-model.fit(X_train, y_train, epochs=2000, callbacks=[tb_callback])
+'''model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
+model.fit(X_train, y_train, epochs=2000, callbacks=[tb_callback])'''
 model.summary()
 
 
+res = model.predict(X_test)
+print(actions[np.argmax(res[2])])
+print(actions[np.argmax(y_test[2])])
 
 
+model.save('action.h5')
+model.load_weights('action.h5')
+
+from sklearn.metrics import multilabel_confusion_matrix, accuracy_score
+yhat = model.predict(X_train)
+ytrue = np.argmax(y_train, axis=1).tolist()
+yhat = np.argmax(yhat, axis=1).tolist()
+print(multilabel_confusion_matrix(ytrue, yhat))
+
+print(accuracy_score(ytrue,yhat))
+'''
+from scipy import stats
+
+colors = [(245,117,16), (117,245,16), (16,117,245)]
+
+def prob_viz(res, actions, input_frame, colors):
+    output_frame = input_frame.copy()
+    for num, prob in enumerate(res):
+        cv2.rectangle(output_frame, (0,60+num*40), (int(prob*100), 90+num*40), colors[num], -1)
+        cv2.putText(output_frame, actions[num], (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)     
+    return output_frame
+
+
+
+holistic = mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5)
+ret, frame = cap.read()
+image, results = mediapipe_detection(frame, holistic)
+plt.figure(figsize=(18,18))
+plt.imshow(prob_viz(res, actions, image, colors))'''
 
