@@ -26,6 +26,10 @@ class newSign:
     def __init__(self,sign):
         self.sign = sign
         actions.append(self.sign)
+        # fp = open('signslist.text','a')
+        # fp.write(self.sign)
+        # fp.close()
+
 
     mp_holistic = mp.solutions.holistic # Holistic model
     mp_drawing = mp.solutions.drawing_utils # Drawing utilities
@@ -105,7 +109,10 @@ class newSign:
                         
                     # NEW Export keypoints
                     keypoints = newSign.extract_keypoints(results)
-                    npy_path = os.path.join(newSign.DATA_PATH, actions, str(sequence), str(frame_num))
+                    # print(keypoints)
+                    # print(newSign.DATA_PATH, actions[-1], str(sequence), str(frame_num))
+                    npy_path = os.path.join(newSign.DATA_PATH, actions[-1], str(sequence), str(frame_num))
+                    # print(npy_path)
                     np.save(npy_path, keypoints)
 
                     # Break gracefully
@@ -116,4 +123,8 @@ class newSign:
         cv2.destroyAllWindows()
 
     
+newSign('hello').capture_sign()
+newSign('thanks').capture_sign()
+newSign('please').capture_sign()
 
+print(actions)

@@ -80,7 +80,7 @@ for action in actions:
 
 
 cap = cv2.VideoCapture(0)
-'''
+
 # Set mediapipe model 
 with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
     
@@ -130,7 +130,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
     
 
 result_test = extract_keypoints(results)
-print(result_test)'''
+print(result_test)
 
 label_map = {label:num for num, label in enumerate(actions)}
 
