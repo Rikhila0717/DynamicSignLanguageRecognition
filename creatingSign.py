@@ -74,6 +74,13 @@ class newSign:
     
     
     def capture_sign(self):
+
+        for sequence in range(newSign.no_sequences):
+            try:
+                os.makedirs(os.path.join(newSign.DATA_PATH, actions[-1], str(sequence)))
+            except:
+                pass
+
         cap = cv2.VideoCapture(0)
         # Set mediapipe model 
         with newSign.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
