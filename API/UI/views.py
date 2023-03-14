@@ -4,7 +4,7 @@ import sys
 
 sys.path.append("../../FinalProject")
 
-from pyscripts import testing
+#from . import testing
 
 #views in ui
 #1) select from and to languages
@@ -19,6 +19,6 @@ def index(request):
 def home_page(request):
     return render(request,"home.html")
 
-def test_project(request):
-    return testing.executable()
+#def test_project(request):
+#    return testing.executable()
     

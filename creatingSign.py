@@ -6,12 +6,11 @@ import time
 import mediapipe as mp
 from sklearn.model_selection import train_test_split 
 from tensorflow.keras.utils import to_categorical
-# import sys
-# sys.path.append("..")
-from .. import modules
-# from modules import config
-# from modules import config
-# from modules import functions
+import sys
+sys.path.append("..")
+print("PATH:",sys.path)
+from modules.config import DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
+from modules import functions
 
 
 class newSign:
@@ -26,9 +25,9 @@ class newSign:
     
     def capture_sign(self):
 
-        for sequence in range(config.no_sequences):
+        for sequence in range(no_sequences):
             try:
-                os.makedirs(os.path.join(config.DATA_PATH, self.sign, str(sequence)))
+                os.makedirs(os.path.join(DATA_PATH, self.sign, str(sequence)))
             except:
                 pass
 
