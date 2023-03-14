@@ -4,8 +4,7 @@ import sys
 
 sys.path.append("../../FinalProject")
 
-#from . import testing
-
+import testing
 #views in ui
 #1) select from and to languages
 #(once this is done, opencv will capture real-time data)
@@ -19,6 +18,6 @@ def index(request):
 def home_page(request):
     return render(request,"home.html")
 
-#def test_project(request):
-#    return testing.executable()
+def test_project(request):
+   return testing.executable()
     
