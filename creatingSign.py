@@ -18,10 +18,10 @@ class newSign:
     def __init__(self,sign):
         self.sign = sign
         # sys.path.append("../static")
-        # fp = open('signslist.text','a')
+        fp = open('static/signslist.text','a')
         print('I opened')
-        # fp.write(self.sign+',')
-        # fp.close()
+        fp.write(self.sign+',')
+        fp.close()
     
     def capture_sign(self):
 

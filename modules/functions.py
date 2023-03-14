@@ -43,7 +43,7 @@ def extract_keypoints(results):
     return np.concatenate([pose, face, lh, rh])
 
 def generate_actions():
-    with open("signslist.text") as f:
+    with open("../static/signslist.text") as f:
         actions = f.read()
     # print("from file",actions)
     actions = actions[:-1]

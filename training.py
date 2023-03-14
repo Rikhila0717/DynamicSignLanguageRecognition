@@ -59,7 +59,7 @@ class Training:
         
 
     def predict_accuracy(self):
-        model = load_model('action.h5')
+        model = load_model('static/action.h5')
         yhat = model.predict(self.X_train)
         ytrue = np.argmax(self.y_train, axis=1).tolist()
         yhat = np.argmax(yhat, axis=1).tolist()
