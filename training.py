@@ -83,7 +83,10 @@ obj.predict_accuracy()
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-    
+obj = Training('bsl')
+obj.lstm_model()
+obj.predict_accuracy()
+
 
     
 

@@ -91,8 +91,12 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
+<<<<<<< HEAD
 # newSign('asl','c').capture_sign()
 obj = Training('asl')
 fp_model = obj.lstm_model()
 obj.predict_accuracy()
+=======
+newSign('bsl','c').capture_sign()
+>>>>>>> 04b4f4bd54aea8ee48fc3e3c4487d9ad53312f02
 
