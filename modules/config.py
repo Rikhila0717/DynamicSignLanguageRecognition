@@ -2,7 +2,11 @@ import os
 import mediapipe as mp
 
 # Path for exported data, numpy arrays
-DATA_PATH = os.path.join('MP_Data')
+ASL_DATA_PATH = os.path.join('ASL_Data')
+ISL_DATA_PATH = os.path.join('ISL_Data')
+BSL_DATA_PATH = os.path.join('BSL_Data')
+
+
 
 # Thirty videos worth of data
 no_sequences = 15

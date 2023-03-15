@@ -9,16 +9,24 @@ from tensorflow.keras.utils import to_categorical
 import sys
 sys.path.append("..")
 print("PATH:",sys.path)
-from modules.config import DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
+from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
 from modules import functions
+from training import Training
 
 
 class newSign:
 
-    def __init__(self,sign):
+    def __init__(self,lang,sign):
         self.sign = sign
+        self.lang = lang
+        if self.lang=='asl':
+            self.DATA_PATH = ASL_DATA_PATH
+        elif self.lang=='isl':
+            self.DATA_PATH = ISL_DATA_PATH
+        elif self.lang=='bsl':
+            self.DATA_PATH = BSL_DATA_PATH
         # sys.path.append("../static")
-        fp = open('static/signslist.text','a')
+        fp = open('static/'+lang+'signs.text','a')
         print('I opened')
         fp.write(self.sign+',')
         fp.close()
@@ -27,7 +35,7 @@ class newSign:
 
         for sequence in range(no_sequences):
             try:
-                os.makedirs(os.path.join(DATA_PATH, self.sign, str(sequence)))
+                os.makedirs(os.path.join(self.DATA_PATH, self.sign, str(sequence)))
             except:
                 pass
 
@@ -68,7 +76,7 @@ class newSign:
                     keypoints = functions.extract_keypoints(results)
                     # print(keypoints)
                     # print(newSign.DATA_PATH, actions[-1], str(sequence), str(frame_num))
-                    npy_path = os.path.join(DATA_PATH, self.sign, str(sequence), str(frame_num))
+                    npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
                     # print(npy_path)
                     np.save(npy_path, keypoints)
 
@@ -83,4 +91,8 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-newSign('bye').capture_sign()
+# newSign('asl','bye').capture_sign()
+obj = Training('asl')
+fp_model = obj.lstm_model()
+obj.predict_accuracy()
+

@@ -4,7 +4,7 @@ import joblib
 import pickle
 
 from modules.functions import generate_actions
-from modules.config import DATA_PATH,sequence_length
+from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,sequence_length
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
@@ -17,8 +17,15 @@ class Training:
 
     model = Sequential()
 
-    def __init__(self):
-        self.actions = generate_actions()
+    def __init__(self,lang):
+        self.lang = lang
+        self.actions = generate_actions(self.lang)
+        if self.lang=='asl':
+            self.DATA_PATH = ASL_DATA_PATH
+        elif self.lang=='isl':
+            self.DATA_PATH = ISL_DATA_PATH
+        elif self.lang=='bsl':
+            self.DATA_PATH = BSL_DATA_PATH
         labels, sequences = self.preprocessing()
         X = np.array(sequences)
         y = to_categorical(labels).astype(int)
@@ -28,10 +35,10 @@ class Training:
         label_map = {label:num for num, label in enumerate(self.actions)}
         sequences, labels = [], []
         for action in self.actions:
-            for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
+            for sequence in np.array(os.listdir(os.path.join(self.DATA_PATH, action))).astype(int):
                 window = []
                 for frame_num in range(sequence_length):
-                    res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
+                    res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
                     window.append(res)
                 sequences.append(window)
                 labels.append(label_map[action])
@@ -50,7 +57,7 @@ class Training:
         Training.model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
         Training.model.fit(self.X_train, self.y_train, epochs=200, callbacks=[tb_callback])
         Training.model.summary()
-        Training.model.save('action.h5')
+        Training.model.save(self.lang+'model.h5')
         # fp_model = "savedModel.sav"
         # print(fp_model)
         # pickle.dump(Training.model, open(fp_model,'wb'))
@@ -59,7 +66,7 @@ class Training:
         
 
     def predict_accuracy(self):
-        model = load_model('static/action.h5')
+        model = load_model('static/'+self.lang+'model.h5')
         yhat = model.predict(self.X_train)
         ytrue = np.argmax(self.y_train, axis=1).tolist()
         yhat = np.argmax(yhat, axis=1).tolist()
@@ -67,9 +74,6 @@ class Training:
         print(accuracy_score(ytrue,yhat))
 
 
-obj = Training()
-# fp_model = obj.lstm_model()
-obj.predict_accuracy()
 
 # loaded_model = pickle.load(open(fp_model,'rb'))
 # result = loaded_model.score(obj.X_test, obj.y_test)

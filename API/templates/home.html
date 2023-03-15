@@ -1,24 +1,57 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Home</title>
         <link rel="stylesheet" href=".\static\style.css">
     </head>
+    <script>
+        var input_val;
+        function get_val(){
+            console.log("Hi");
+            var ele = document.getElementsByName("input");
+
+            for(i=0; i<ele.length; i++){
+                if(ele[i].checked){
+                    input_val = ele[i].value;
+                }
+            }
+            if (input_val=='asl'){
+                document.getElementById('ip_form').action = '{% url 'asl' %}';
+            }
+            else if (input_val=='isl'){
+                document.getElementById('ip_form').action = '{% url 'isl' %}';
+            }
+            else{
+                document.getElementById('ip_form').action = '{% url 'bsl' %}';
+            }
+        }
+    </script>
     <body>
         <div id="options">
             <h3>Gesture in the sign language of your choice and translate it</h3>
             <div class="menu" id="left_menu">
                 <label for="from" class="labels">Choose a sign language<br><br></label>
-                <select name="from" class="dropdown">
+                {% comment %} <select name="from" class="dropdown">
                     <option>American Sign Language(ASL)</option>
                     <option>Indian Sign Language(ISL)</option>
-                </select>
+                </select> {% endcomment %}
+                <form id = 'ip_form' method="get">
+                    <input type="radio" id="ASL" name = "input" value="asl">
+                    <label for="asl">ASL</label><br>
+                    <input type="radio" id="ISL" name="input" value="isl">
+                    <label for="isl">ISL</label><br>
+                    <input type="radio" id="BSL" name="input" value="bsl">
+                    <label for="bsl">BSL</label><br>
+                    <button type='button' onclick='get_val()'><input type='submit' value="GO"></button>
+                </form>
+
             </div>
             <div class="menu" id="right_menu">
                 <label for="to">Choose translation language<br><br></label>
-                <select name="to" class="dropdown">
+                {% comment %} <select name="to" class="dropdown">
                     <option>English</option>
                     <option>Other</option>
-                </select>
+                </select> {% endcomment %}
             </div>  
         </div>
     </body>

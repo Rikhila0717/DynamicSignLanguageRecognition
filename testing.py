@@ -6,15 +6,15 @@ import modules.functions as functions
 from keras.models import load_model
 
 
-def executable():
+def executable(lang):
 
     # 1. New detection variables
     sequence = []
     sentence = []
     predictions = []
     threshold = 0.25
-    actions = functions.generate_actions()
-    model = load_model('action.h5')
+    actions = functions.generate_actions(lang)
+    model = load_model('../static/'+lang+'model.h5')
     cap = cv2.VideoCapture(0)
     # Set mediapipe model 
 
@@ -72,3 +72,4 @@ def executable():
         cap.release()
         cv2.destroyAllWindows()
 
+# executable()

@@ -42,8 +42,8 @@ def extract_keypoints(results):
     rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(21*3)
     return np.concatenate([pose, face, lh, rh])
 
-def generate_actions():
-    with open("../static/signslist.text") as f:
+def generate_actions(lang):
+    with open("static/"+lang+"signs.text") as f:
         actions = f.read()
     # print("from file",actions)
     actions = actions[:-1]
