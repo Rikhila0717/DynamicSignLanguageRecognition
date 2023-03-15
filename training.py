@@ -55,7 +55,7 @@ class Training:
         Training.model.add(Dense(32, activation='relu'))
         Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
         Training.model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
-        Training.model.fit(self.X_train, self.y_train, epochs=200, callbacks=[tb_callback])
+        Training.model.fit(self.X_train, self.y_train, epochs=2000, callbacks=[tb_callback])
         Training.model.summary()
         Training.model.save(self.lang+'model.h5')
         # fp_model = "savedModel.sav"
@@ -79,7 +79,10 @@ class Training:
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-    
+obj = Training('bsl')
+obj.lstm_model()
+obj.predict_accuracy()
+
 
     
 
