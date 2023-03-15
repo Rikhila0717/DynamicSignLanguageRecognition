@@ -17,11 +17,12 @@ def index(request):
     return HttpResponse("Home page")
 
 def home_page(request):
-    # test_asl(request.GET)
+    
     return render(request,"home.html")
 
 def test_asl(request):
-   return testing.executable('asl')
+   op_lang = request.GET['output']
+   return testing.executable('asl',op_lang)
 
 def test_isl(request):
     return testing.executable('isl')
