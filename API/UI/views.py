@@ -17,7 +17,6 @@ def index(request):
     return HttpResponse("Home page")
 
 def home_page(request):
-    x = request.GET['input']
     # test_asl(request.GET)
     return render(request,"home.html")
 

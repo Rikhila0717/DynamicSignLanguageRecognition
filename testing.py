@@ -57,7 +57,7 @@ def executable(lang):
                     sentence = sentence[-5:]
                 
                 # Viz probabilities
-                # image = functions.prob_viz(res, actions, image)
+                image = functions.prob_viz(res, actions, image)
                 
                 cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
                 cv2.putText(image, ' '.join(sentence), (3,30), 
@@ -72,4 +72,4 @@ def executable(lang):
         cap.release()
         cv2.destroyAllWindows()
 
-# executable()
+# executable('bsl')

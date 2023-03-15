@@ -49,8 +49,9 @@ class Training:
         log_dir = os.path.join('Logs')
         tb_callback = TensorBoard(log_dir=log_dir)
         Training.model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30,1662)))
-        Training.model.add(LSTM(128, return_sequences=True, activation='relu'))
-        Training.model.add(LSTM(64, return_sequences=False, activation='relu'))
+        # Training.model.add(LSTM(256, return_sequences=True, activation='relu',dropout=0.2))
+        Training.model.add(LSTM(128, return_sequences=True, activation='relu',dropout=0.2))
+        Training.model.add(LSTM(64, return_sequences=False, activation='relu',dropout=0.2))
         Training.model.add(Dense(64, activation='relu'))
         Training.model.add(Dense(32, activation='relu'))
         Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
@@ -73,9 +74,9 @@ class Training:
         print(multilabel_confusion_matrix(ytrue, yhat))
         print(accuracy_score(ytrue,yhat))
 
-obj = Training('asl')
-obj.lstm_model()
-obj.predict_accuracy()
+# obj = Training('asl')
+# obj.lstm_model()
+# obj.predict_accuracy()
 
 
 
@@ -83,7 +84,7 @@ obj.predict_accuracy()
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-obj = Training('bsl')
+obj = Training('asl')
 obj.lstm_model()
 obj.predict_accuracy()
 

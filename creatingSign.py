@@ -27,7 +27,7 @@ class newSign:
             self.DATA_PATH = BSL_DATA_PATH
         # sys.path.append("../static")
         fp = open('static/'+lang+'signs.text','a')
-        print('I opened')
+        # print('I opened')
         fp.write(self.sign+',')
         fp.close()
     
@@ -91,5 +91,7 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-# newSign('asl','c').capture_sign()
+newSign('asl','hello').capture_sign()
+newSign('asl','thanks').capture_sign()
+newSign('asl','please').capture_sign()
 
