@@ -6,12 +6,8 @@ import time
 import mediapipe as mp
 from sklearn.model_selection import train_test_split 
 from tensorflow.keras.utils import to_categorical
-import sys
-sys.path.append("..")
-print("PATH:",sys.path)
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
 from modules import functions
-from training import Training
 
 
 class newSign:
@@ -92,6 +88,6 @@ class newSign:
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
 newSign('asl','hello').capture_sign()
-newSign('asl','thanks').capture_sign()
-newSign('asl','please').capture_sign()
+# newSign('asl','thanks').capture_sign()
+# newSign('asl','please').capture_sign()
 

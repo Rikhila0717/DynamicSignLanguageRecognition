@@ -12,10 +12,12 @@ BSL_DATA_PATH = os.path.join('BSL_Data')
 no_sequences = 30
 
 # Videos are going to be 30 frames in length
-sequence_length = 30
+sequence_length = 15
 
 # Folder start
 start_folder = 30
 
 mp_holistic = mp.solutions.holistic # Holistic model
 mp_drawing = mp.solutions.drawing_utils # Drawing utilities
+
+
