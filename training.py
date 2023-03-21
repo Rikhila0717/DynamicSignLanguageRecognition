@@ -2,6 +2,8 @@ import numpy as np
 import os
 import joblib
 import pickle
+import sys
+# sys.path.append('..')
 
 from modules.functions import generate_actions
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,sequence_length
@@ -48,10 +50,10 @@ class Training:
     def lstm_model(self):
         log_dir = os.path.join('Logs')
         tb_callback = TensorBoard(log_dir=log_dir)
-        Training.model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30,1662)))
-        # Training.model.add(LSTM(256, return_sequences=True, activation='relu',dropout=0.2))
-        Training.model.add(LSTM(128, return_sequences=True, activation='relu',dropout=0.2))
-        Training.model.add(LSTM(64, return_sequences=False, activation='relu',dropout=0.2))
+        Training.model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(15,1662)))
+        Training.model.add(LSTM(128, return_sequences=True, activation='relu'))
+        Training.model.add(LSTM(64, return_sequences=True, activation='relu'))
+        Training.model.add(LSTM(64, return_sequences=False, activation='relu'))
         Training.model.add(Dense(64, activation='relu'))
         Training.model.add(Dense(32, activation='relu'))
         Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
@@ -61,13 +63,13 @@ class Training:
         Training.model.save(self.lang+'model.h5')
         # fp_model = "savedModel.sav"
         # print(fp_model)
-        # pickle.dump(Training.model, open(fp_model,'wb'))
+        # pickle.dump(Training.model, ope n(fp_model,'wb'))
         # return fp_model
 
         
 
     def predict_accuracy(self):
-        model = load_model('static/'+self.lang+'model.h5')
+        model = load_model(self.lang+'model.h5')
         yhat = model.predict(self.X_train)
         ytrue = np.argmax(self.y_train, axis=1).tolist()
         yhat = np.argmax(yhat, axis=1).tolist()

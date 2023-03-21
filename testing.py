@@ -69,7 +69,7 @@ def executable(lang,op_lang):
                     sentence = sentence[-5:]
                 
                 # Viz probabilities
-                # image = functions.prob_viz(res, actions, image)
+                image = functions.prob_viz(res, actions, image)
                 
 
                 x = ' '.join(sentence)
