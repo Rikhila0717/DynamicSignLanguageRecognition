@@ -4,7 +4,7 @@ import joblib
 import pickle
 
 from modules.functions import generate_actions
-from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,sequence_length
+from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,sequence_length
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
@@ -26,6 +26,8 @@ class Training:
             self.DATA_PATH = ISL_DATA_PATH
         elif self.lang=='bsl':
             self.DATA_PATH = BSL_DATA_PATH
+        elif self.lang=='fsl':
+            self.DATA_PATH = FSL_DATA_PATH
         labels, sequences = self.preprocessing()
         X = np.array(sequences)
         y = to_categorical(labels).astype(int)
@@ -67,7 +69,7 @@ class Training:
         
 
     def predict_accuracy(self):
-        model = load_model('static/'+self.lang+'model.h5')
+        model = load_model(self.lang+'model.h5')
         yhat = model.predict(self.X_train)
         ytrue = np.argmax(self.y_train, axis=1).tolist()
         yhat = np.argmax(yhat, axis=1).tolist()

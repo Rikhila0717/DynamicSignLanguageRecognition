@@ -6,7 +6,7 @@ import time
 import mediapipe as mp
 from sklearn.model_selection import train_test_split 
 from tensorflow.keras.utils import to_categorical
-from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
+from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
 from modules import functions
 
 
@@ -21,6 +21,8 @@ class newSign:
             self.DATA_PATH = ISL_DATA_PATH
         elif self.lang=='bsl':
             self.DATA_PATH = BSL_DATA_PATH
+        elif self.lang=='fsl':
+            self.DATA_PATH = FSL_DATA_PATH
         # sys.path.append("../static")
         fp = open('static/'+lang+'signs.text','a')
         # print('I opened')
@@ -87,7 +89,7 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-newSign('bsl','me').capture_sign()
+newSign('fsl','no').capture_sign()
 # newSign('asl','thanks').capture_sign()
 # newSign('asl','please').capture_sign()
 

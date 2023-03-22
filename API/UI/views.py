@@ -29,4 +29,7 @@ def test_isl(request):
 
 def test_bsl(request):
     return testing.executable('bsl')
+
+def test_fsl(request):
+    return testing.executable('fsl')
     
