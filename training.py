@@ -6,7 +6,7 @@ import sys
 # sys.path.append('..')
 
 from modules.functions import generate_actions
-from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,sequence_length
+from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,sequence_length
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
@@ -28,6 +28,8 @@ class Training:
             self.DATA_PATH = ISL_DATA_PATH
         elif self.lang=='bsl':
             self.DATA_PATH = BSL_DATA_PATH
+        elif self.lang=='fsl':
+            self.DATA_PATH = FSL_DATA_PATH
         labels, sequences = self.preprocessing()
         X = np.array(sequences)
         y = to_categorical(labels).astype(int)

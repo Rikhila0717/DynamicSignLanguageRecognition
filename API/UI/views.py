@@ -31,4 +31,8 @@ def test_isl(request):
 def test_bsl(request):
     op_lang = request.GET['output']
     return testing.executable('bsl',op_lang)
+    return testing.executable('bsl')
+
+def test_fsl(request):
+    return testing.executable('fsl')
     

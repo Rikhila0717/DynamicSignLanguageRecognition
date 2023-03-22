@@ -21,8 +21,11 @@
             else if (input_val=='isl'){
                 document.getElementById('ip_form').action = '{% url 'isl' %}';
             }
-            else{
+            else if (input_val=='bsl'){
                 document.getElementById('ip_form').action = '{% url 'bsl' %}';
+            }
+            else if (input_val=='fsl'){
+                document.getElementById('ip_form').action = '{% url 'fsl' %}';
             }
         }
     </script>
@@ -42,6 +45,8 @@
                     <label for="isl">ISL</label><br>
                     <input type="radio" id="BSL" name="input" value="bsl">
                     <label for="bsl">BSL</label><br>
+                    <input type="radio" id="FSL" name="input" value="fsl">
+                    <label for="fsl">FSL</label><br>
                    
                 {% comment %} <div class="menu" id="right_menu"> {% endcomment %}
                     <label for="to">Choose translation language<br><br></label>
