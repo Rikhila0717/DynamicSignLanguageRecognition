@@ -94,11 +94,23 @@ asl_obj.lstm_model()
 print("ASL model accuracy")
 asl_obj.predict_accuracy()
 
-bsl_obj = Training('bsl')
-print('BSL model epochs')
-bsl_obj.lstm_model()
-print("BSL model accuracy")
-bsl_obj.predict_accuracy()
+# bsl_obj = Training('bsl')
+# print('BSL model epochs')
+# bsl_obj.lstm_model()
+# print("BSL model accuracy")
+# bsl_obj.predict_accuracy()
+
+# isl_obj = Training('isl')
+# print('ISL model epochs')
+# isl_obj.lstm_model()
+# print("ISL model accuracy")
+# isl_obj.predict_accuracy()
+
+# fsl_obj = Training('fsl')
+# print('FSL model epochs')
+# fsl_obj.lstm_model()
+# print("FSL model accuracy")
+# fsl_obj.predict_accuracy()
 
 
 
