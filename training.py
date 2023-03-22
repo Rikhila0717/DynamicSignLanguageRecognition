@@ -86,9 +86,19 @@ class Training:
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-obj = Training('asl')
-obj.lstm_model()
-obj.predict_accuracy()
+asl_obj = Training('asl')
+print('ASL MODEL epochs')
+asl_obj.lstm_model()
+print("ASL model accuracy")
+asl_obj.predict_accuracy()
+
+bsl_obj = Training('bsl')
+print('BSL model epochs')
+bsl_obj.lstm_model()
+print("BSL model accuracy")
+bsl_obj.predict_accuracy()
+
+
 
 
     

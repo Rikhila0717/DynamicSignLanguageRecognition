@@ -17,7 +17,7 @@ def executable(lang,op_lang):
     predictions = []
     threshold = 0.5
     actions = functions.generate_actions(lang)
-    model = load_model('../static/'+lang+'model.h5')
+    model = load_model('C:/Users/rikhi/projectF/FinalProject/'+lang+'model.h5')
     cap = cv2.VideoCapture(0)
     # Set mediapipe model 
     print("in executable",op_lang)
@@ -46,9 +46,9 @@ def executable(lang,op_lang):
             # 2. Prediction logic
             keypoints = functions.extract_keypoints(results)
             sequence.insert(0, keypoints)
-            sequence = sequence[:30]
+            sequence = sequence[:15]
             
-            if len(sequence) == 30:
+            if len(sequence) == 15:
 
                 res = model.predict(np.expand_dims(sequence, axis=0))[0]
                 '''print(actions[np.argmax(res)])'''
@@ -69,7 +69,7 @@ def executable(lang,op_lang):
                     sentence = sentence[-5:]
                 
                 # Viz probabilities
-                image = functions.prob_viz(res, actions, image)
+                # image = functions.prob_viz(res, actions, image)
                 
 
                 x = ' '.join(sentence)

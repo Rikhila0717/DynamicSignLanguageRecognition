@@ -87,7 +87,7 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-newSign('asl','z').capture_sign()
+newSign('isl','no').capture_sign()
 # newSign('asl','thanks').capture_sign()
 # newSign('asl','please').capture_sign()
 
