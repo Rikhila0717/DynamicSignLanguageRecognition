@@ -1,5 +1,7 @@
 import os
 import mediapipe as mp
+import boto3
+from credentials import mykey,mysecretkey
 
 # Path for exported data, numpy arrays
 ASL_DATA_PATH = os.path.join('ASL_Data')
@@ -21,4 +23,9 @@ start_folder = 30
 mp_holistic = mp.solutions.holistic # Holistic model
 mp_drawing = mp.solutions.drawing_utils # Drawing utilities
 
-
+s3 = boto3.resource(
+    service_name='s3',
+    region_name='ap-south-1',
+    aws_access_key_id=mykey,
+    aws_secret_access_key=mysecretkey
+)

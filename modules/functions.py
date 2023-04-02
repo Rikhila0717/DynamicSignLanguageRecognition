@@ -1,8 +1,12 @@
 import mediapipe as mp
 import cv2
-from modules.config import mp_drawing,mp_holistic
+from config import mp_drawing,mp_holistic,s3
+import boto3
 import numpy as np
-from scipy import stats
+# from scipy import stats
+# import pymongo as mongo
+import pickle
+from s3fs.core import S3FileSystem
 
 def mediapipe_detection(image, model):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # COLOR CONVERSION BGR 2 RGB
@@ -61,3 +65,34 @@ def prob_viz(res, actions, input_frame):
         cv2.rectangle(output_frame, (0,60+num*40), (int(prob*100), 90+num*40), colors[num], -1)
         cv2.putText(output_frame, actions[num], (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)     
     return output_frame
+
+
+# def connect_db():
+#      myclient = mongo.MongoClient("mongodb://localhost:27017/")
+#      mydb = myclient["signs"]
+#      asl_col = mydb["ASL_Data"]
+     
+#      print(myclient.list_database_names())
+#      print(mydb.list_collection_names())
+
+
+# connect_db()
+
+# for bucket in s3.buckets.all():
+#     print(bucket.name)
+S3=boto3.client(s3)
+
+# s3 = S3FileSystem()
+
+nparr = np.array([1,2,3])
+
+def saveLabelsToS3(npyArray, name):
+    with S3.open('{}/{}'.format('asl-data', name), 'wb') as f:
+        f.write(pickle.dumps(npyArray))
+
+def readLabelsFromS3(name):
+    return np.load(S3.open('{}/{}'.format('asl-data', name)), allow_pickle=True)
+
+# Use as below
+saveLabelsToS3(nparr, 'test.pkl')
+labels = readLabelsFromS3('test.pkl')

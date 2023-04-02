@@ -8,13 +8,22 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
 from modules import functions
+import pymongo as mongo
+from pymongoarrow.api import write
+
+
+myclient = mongo.MongoClient("mongodb://localhost:27017/")
+mydb = myclient["signs"]
+
 
 
 class newSign:
 
     def __init__(self,lang,sign):
+        self.col = mydb[lang+"_Data"]
         self.sign = sign
         self.lang = lang
+
         if self.lang=='asl':
             self.DATA_PATH = ASL_DATA_PATH
         elif self.lang=='isl':
@@ -72,10 +81,20 @@ class newSign:
                         
                     # NEW Export keypoints
                     keypoints = functions.extract_keypoints(results)
+                    # print(type(keypoints))
+
+                    # self.col.insert_many([
+                    #     {
+                    #     "_id": str(frame_num),
+                    #     "_path": str(sequence)+","+self.sign+","+self.lang,
+                    #     str(frame_num):keypoints,
+                    #     }
+                    # ])
                     # print(keypoints)
                     # print(newSign.DATA_PATH, actions[-1], str(sequence), str(frame_num))
                     npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
                     # print(npy_path)
+
                     np.save(npy_path, keypoints)
 
                     # Break gracefully
@@ -89,7 +108,7 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-newSign('fsl','no').capture_sign()
-# newSign('asl','thanks').capture_sign()
+# newSign('fsl','no').capture_sign()
+newSign('asl','test').capture_sign()
 # newSign('asl','please').capture_sign()
 
