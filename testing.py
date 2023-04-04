@@ -65,11 +65,11 @@ def executable(lang,op_lang):
                         else:
                             sentence.append(actions[np.argmax(res)])
 
-                if len(sentence) > 5: 
-                    sentence = sentence[-5:]
+                if len(sentence) > 1: 
+                    sentence = sentence[-1:]
                 
                 # Viz probabilities
-                # image = functions.prob_viz(res, actions, image)
+                image = functions.prob_viz(res, actions, image)
                 
 
                 x = ' '.join(sentence)

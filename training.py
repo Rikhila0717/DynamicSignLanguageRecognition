@@ -8,13 +8,16 @@ import sys
 from modules.functions import generate_actions
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,sequence_length
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.regularizers import L1,L2
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.regularizers import L2,L1,L1L2
 from tensorflow.keras.callbacks import TensorBoard
 from keras.models import load_model
 from sklearn.metrics import multilabel_confusion_matrix, accuracy_score
+from sklearn.preprocessing import normalize
 
 class Training:
 
@@ -34,6 +37,16 @@ class Training:
         labels, sequences = self.preprocessing()
         X = np.array(sequences)
         y = to_categorical(labels).astype(int)
+        print(X.shape)
+        # print(y.shape)
+        X=X.reshape(X.shape[0], (X.shape[1]*X.shape[2]))
+        print(X.shape)
+
+        imputer = SimpleImputer(strategy='constant',fill_value=0)
+        imputer.fit_transform(X,y)
+        X = normalize(X)
+        X=X.reshape(X.shape[0],15,1662)
+        print(X.shape)
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.05)
 
     def preprocessing(self):

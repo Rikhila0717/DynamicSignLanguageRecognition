@@ -1,6 +1,7 @@
 import mediapipe as mp
 import cv2
-from modules.config import mp_drawing,mp_holistic
+from config import mp_drawing,mp_holistic,s3
+import boto3
 import numpy as np
 from scipy import stats
 from modules.getCredentials import s3

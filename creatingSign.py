@@ -14,8 +14,10 @@ import pickle
 class newSign:
 
     def __init__(self,lang,sign):
+        self.col = mydb[lang+"_Data"]
         self.sign = sign
         self.lang = lang
+
         if self.lang=='asl':
             self.DATA_PATH = ASL_DATA_PATH
         elif self.lang=='isl':
@@ -77,10 +79,20 @@ class newSign:
                         
                     # NEW Export keypoints
                     keypoints = functions.extract_keypoints(results)
+                    # print(type(keypoints))
+
+                    # self.col.insert_many([
+                    #     {
+                    #     "_id": str(frame_num),
+                    #     "_path": str(sequence)+","+self.sign+","+self.lang,
+                    #     str(frame_num):keypoints,
+                    #     }
+                    # ])
                     # print(keypoints)
                     # print(newSign.DATA_PATH, actions[-1], str(sequence), str(frame_num))
                     npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
                     # print(npy_path)
+
                     np.save(npy_path, keypoints)
                     # object = s3.Object(self.lang+"-data",'')
                     # object = s3.Object(self.lang+'-data',self.sign+'/'+sequence)
@@ -97,7 +109,7 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-# newSign('fsl','no').capture_sign()
-newSign('asl','dummytest').capture_sign()
+newSign('fsl','no').capture_sign()
+# newSign('asl','thanks').capture_sign()
 # newSign('asl','please').capture_sign()
 
