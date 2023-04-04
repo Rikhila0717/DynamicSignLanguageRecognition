@@ -26,13 +26,14 @@ def test_asl(request):
 
 def test_isl(request):
     op_lang = request.GET['output']
-    return testing.executable('isl', op_lang)
+    return testing.executable('isl',op_lang)
 
 def test_bsl(request):
     op_lang = request.GET['output']
-    return testing.executable('bsl', op_lang)
+    return testing.executable('bsl',op_lang)
+    # return testing.executable('bsl')
 
 def test_fsl(request):
     op_lang = request.GET['output']
-    return testing.executable('fsl', op_lang)
+    return testing.executable('fsl',op_lang)
     

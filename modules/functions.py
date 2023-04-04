@@ -1,9 +1,11 @@
 import mediapipe as mp
 import cv2
-from modules.config import mp_drawing,mp_holistic
+from config import mp_drawing,mp_holistic,s3
+import boto3
 import numpy as np
 from scipy import stats
-import pymongo as mongo
+from modules.getCredentials import s3
+import pickle
 
 def mediapipe_detection(image, model):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # COLOR CONVERSION BGR 2 RGB
@@ -44,7 +46,7 @@ def extract_keypoints(results):
     return np.concatenate([pose, face, lh, rh])
 
 def generate_actions(lang):
-    with open("../static/"+lang+"signs.text") as f:
+    with open("static/"+lang+"signs.text") as f:
         actions = f.read()
     # print("from file",actions)
     actions = actions[:-1]
@@ -64,20 +66,9 @@ def prob_viz(res, actions, input_frame):
     return output_frame
 
 
+def saveLabelsToS3(npyArray,bucket, name):
+    with s3.open('{}/{}'.format(bucket, name), 'wb') as f:
+        f.write(pickle.dumps(npyArray))
 
-'''def connect_db(lang,sign):
-     myclient = mongo.MongoClient("mongodb://localhost:27017/")
-     mydb = myclient["signs"]
-     asl_col = mydb[lang]
-     asl_col.insert_many([
-         {
-         "_id": str(framenum),
-          "_path": str(sequence)+","+sign+","+lang,
-          
-         },
-     ])
-     print(myclient.list_database_names())
-     print(mydb.list_collection_names())
-
-
-connect_db()'''
+def readLabelsFromS3(bucket,name):
+    return np.load(s3.open('{}/{}'.format(bucket, name)), allow_pickle=True)

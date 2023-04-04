@@ -17,7 +17,7 @@ def executable(lang,op_lang):
     predictions = []
     threshold = 0.5
     actions = functions.generate_actions(lang)
-    model = load_model('../static/'+lang+'model.h5')
+    model = load_model('C:/Users/rikhi/projectF/FinalProject/'+lang+'model.h5')
     cap = cv2.VideoCapture(0)
     # Set mediapipe model 
     print("in executable",op_lang)
@@ -65,11 +65,11 @@ def executable(lang,op_lang):
                         else:
                             sentence.append(actions[np.argmax(res)])
 
-                if len(sentence) > 5: 
-                    sentence = sentence[-5:]
+                if len(sentence) > 1: 
+                    sentence = sentence[-1:]
                 
                 # Viz probabilities
-                # image = functions.prob_viz(res, actions, image)
+                image = functions.prob_viz(res, actions, image)
                 
 
                 x = ' '.join(sentence)
