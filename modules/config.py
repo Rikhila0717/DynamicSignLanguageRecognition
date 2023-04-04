@@ -1,5 +1,7 @@
 import os
 import mediapipe as mp
+import boto3
+
 
 # Path for exported data, numpy arrays
 ASL_DATA_PATH = os.path.join('ASL_Data')

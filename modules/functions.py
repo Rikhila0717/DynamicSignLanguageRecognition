@@ -3,6 +3,8 @@ import cv2
 from modules.config import mp_drawing,mp_holistic
 import numpy as np
 from scipy import stats
+from modules.getCredentials import s3
+import pickle
 
 def mediapipe_detection(image, model):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # COLOR CONVERSION BGR 2 RGB
@@ -61,3 +63,11 @@ def prob_viz(res, actions, input_frame):
         cv2.rectangle(output_frame, (0,60+num*40), (int(prob*100), 90+num*40), colors[num], -1)
         cv2.putText(output_frame, actions[num], (0, 85+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)     
     return output_frame
+
+
+def saveLabelsToS3(npyArray,bucket, name):
+    with s3.open('{}/{}'.format(bucket, name), 'wb') as f:
+        f.write(pickle.dumps(npyArray))
+
+def readLabelsFromS3(bucket,name):
+    return np.load(s3.open('{}/{}'.format(bucket, name)), allow_pickle=True)
