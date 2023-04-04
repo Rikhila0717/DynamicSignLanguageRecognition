@@ -4,6 +4,7 @@ import joblib
 import pickle
 import sys
 # sys.path.append('..')
+from modules.functions import readLabelsFromS3
 
 from modules.functions import generate_actions
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,sequence_length
@@ -24,6 +25,7 @@ class Training:
     model = Sequential()
 
     def __init__(self,lang):
+        # print("Hi I started")
         self.lang = lang
         self.actions = generate_actions(self.lang)
         if self.lang=='asl':
@@ -56,7 +58,10 @@ class Training:
             for sequence in np.array(os.listdir(os.path.join(self.DATA_PATH, action))).astype(int):
                 window = []
                 for frame_num in range(sequence_length):
-                    res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
+                    # print("I'm here trying to read {} of {} of {}".format(frame_num,sequence,action))
+                    res = readLabelsFromS3(self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
+                    # res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
+                    # print(res)
                     window.append(res)
                 sequences.append(window)
                 labels.append(label_map[action])

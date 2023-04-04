@@ -1,11 +1,13 @@
 import mediapipe as mp
 import cv2
-from config import mp_drawing,mp_holistic,s3
+from modules.config import mp_drawing,mp_holistic,ASL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,ISL_DATA_PATH,sequence_length
 import boto3
 import numpy as np
 from scipy import stats
 from modules.getCredentials import s3
 import pickle
+import os
+
 
 def mediapipe_detection(image, model):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # COLOR CONVERSION BGR 2 RGB
@@ -67,8 +69,25 @@ def prob_viz(res, actions, input_frame):
 
 
 def saveLabelsToS3(npyArray,bucket, name):
-    with s3.open('{}/{}'.format(bucket, name), 'wb') as f:
+    with s3.open('/{}/{}'.format(bucket, name), 'wb') as f:
         f.write(pickle.dumps(npyArray))
 
 def readLabelsFromS3(bucket,name):
     return np.load(s3.open('{}/{}'.format(bucket, name)), allow_pickle=True)
+
+def send_existing_data(lang):
+    if lang=='asl':
+        DATA_PATH = ASL_DATA_PATH
+    elif lang=='isl':
+        DATA_PATH = ISL_DATA_PATH
+    elif lang=='bsl':
+        DATA_PATH = BSL_DATA_PATH
+    elif lang=='fsl':
+        DATA_PATH = FSL_DATA_PATH
+    actions = generate_actions(lang)
+    for action in actions:
+        for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
+            for frame_num in range(sequence_length):
+                res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
+                saveLabelsToS3(res,lang+'-data','{}-data/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
+
