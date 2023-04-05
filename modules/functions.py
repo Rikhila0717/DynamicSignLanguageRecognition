@@ -1,10 +1,10 @@
 import mediapipe as mp
 import cv2
-from modules.config import mp_drawing,mp_holistic,ASL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,ISL_DATA_PATH,sequence_length
+from config import mp_drawing,mp_holistic,ASL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,ISL_DATA_PATH,sequence_length
 import boto3
 import numpy as np
 from scipy import stats
-from modules.getCredentials import s3
+from getCredentials import s3
 import pickle
 import os
 
@@ -89,5 +89,9 @@ def send_existing_data(lang):
         for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
             for frame_num in range(sequence_length):
                 res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
-                saveLabelsToS3(res,lang+'-data','{}-data/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
+                saveLabelsToS3(res,lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
+    print('{} done'.format(lang))
 
+send_existing_data('isl')
+send_existing_data('fsl')
+send_existing_data('bsl')

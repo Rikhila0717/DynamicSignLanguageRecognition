@@ -59,7 +59,7 @@ class Training:
                 window = []
                 for frame_num in range(sequence_length):
                     # print("I'm here trying to read {} of {} of {}".format(frame_num,sequence,action))
-                    res = readLabelsFromS3(self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
+                    res = readLabelsFromS3(self.lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
                     # res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
                     # print(res)
                     window.append(res)
