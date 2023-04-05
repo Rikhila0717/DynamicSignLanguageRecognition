@@ -9,12 +9,13 @@ from tensorflow.keras.utils import to_categorical
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
 from modules import functions
 import pickle
+from modules.getCredentials import s3
 # from s3fs.core import S3FileSystem
 
 class newSign:
 
     def __init__(self,lang,sign):
-        #self.col = mydb[lang+"_Data"]
+        # self.col = mydb[lang+"_Data"]
         self.sign = sign
         self.lang = lang
 
@@ -96,7 +97,7 @@ class newSign:
                     np.save(npy_path, keypoints)
                     # object = s3.Object(self.lang+"-data",'')
                     # object = s3.Object(self.lang+'-data',self.sign+'/'+sequence)
-                    functions.saveLabelsToS3(keypoints,self.lang+'-data','{}/{}/{}.pkl'.format(self.sign,sequence,frame_num))
+                    functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
 
                     # Break gracefully
                     if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -109,7 +110,7 @@ class newSign:
 # newSign('hello').capture_sign()
 # newSign('thanks').capture_sign()
 # newSign('please').capture_sign()
-newSign('asl','dummy').capture_sign()
+# newSign('fsl','no').capture_sign()
 # newSign('asl','thanks').capture_sign()
-# newSign('asl','please').capture_sign()
+newSign('asl','dummy').capture_sign()
 
