@@ -59,12 +59,13 @@ class Training:
                 window = []
                 for frame_num in range(sequence_length):
                     # print("I'm here trying to read {} of {} of {}".format(frame_num,sequence,action))
-                    res = readLabelsFromS3(self.lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
-                    # res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
+                    # res = readLabelsFromS3(self.lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
+                    res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
                     # print(res)
                     window.append(res)
                 sequences.append(window)
                 labels.append(label_map[action])
+        print('retrieved data')
         return labels, sequences
     
     
@@ -73,9 +74,10 @@ class Training:
         tb_callback = TensorBoard(log_dir=log_dir)
         ##our model
         Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
-        Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
+        # Training.model.add(LSTM(64, return_sequences=True, activation='tanh'))
+        Training.model.add(LSTM(64, return_sequences=False, activation='tanh',activity_regularizer=L1L2(0.01)))
         Training.model.add(Dropout(0.2))
-        Training.model.add(Dense(64, activation='sigmoid'))
+        # Training.model.add(Dense(64, activation='sigmoid'))
         Training.model.add(Dense(32, activation='sigmoid'))
         Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
 
@@ -97,7 +99,7 @@ class Training:
         # Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
 
         Training.model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
-        Training.model.fit(self.X_train, self.y_train, epochs=2000, callbacks=[tb_callback])
+        Training.model.fit(self.X_train, self.y_train, epochs=1500, callbacks=[tb_callback])
         Training.model.summary()
         Training.model.save(self.lang+'model.h5')
         
@@ -120,11 +122,11 @@ class Training:
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-asl_obj = Training('asl')
-print('ASL MODEL epochs')
-asl_obj.lstm_model()
-print("ASL model accuracy")
-asl_obj.predict_accuracy()
+# asl_obj = Training('asl')
+# print('ASL MODEL epochs')
+# asl_obj.lstm_model()
+# print("ASL model accuracy")
+# asl_obj.predict_accuracy()
 
 # bsl_obj = Training('bsl')
 # print('BSL model epochs')
@@ -132,11 +134,11 @@ asl_obj.predict_accuracy()
 # print("BSL model accuracy")
 # bsl_obj.predict_accuracy()
 
-# isl_obj = Training('isl')
-# print('ISL model epochs')
-# isl_obj.lstm_model()
-# print("ISL model accuracy")
-# isl_obj.predict_accuracy()
+isl_obj = Training('isl')
+print('ISL model epochs')
+isl_obj.lstm_model()
+print("ISL model accuracy")
+isl_obj.predict_accuracy()
 
 # fsl_obj = Training('fsl')
 # print('FSL model epochs')

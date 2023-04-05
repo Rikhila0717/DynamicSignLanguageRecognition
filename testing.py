@@ -22,13 +22,13 @@ def executable(lang,op_lang):
     # Set mediapipe model 
     print("in executable",op_lang)
     if op_lang=='hi':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
     elif op_lang=='te':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
     elif op_lang=='ta':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
     elif op_lang=='en':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/IMFellEnglish-Regular.ttf',30)
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/IMFellEnglish-Regular.ttf',30)
     with config.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
             flag=0
@@ -69,7 +69,7 @@ def executable(lang,op_lang):
                     sentence = sentence[-1:]
                 
                 # Viz probabilities
-                image = functions.prob_viz(res, actions, image)
+                # image = functions.prob_viz(res, actions, image)
                 
 
                 x = ' '.join(sentence)
@@ -81,9 +81,9 @@ def executable(lang,op_lang):
                 print("translated= {} type={}".format(translated,type(translated)))
                 img_pil = Image.fromarray(image)
                 draw = ImageDraw.Draw(img_pil)
-                draw.text((50, 80),  translated, font = font)
+                draw.text((50, 80),  translated, font = font,fill=(0,0,0,0))
                 op_lang_img = np.array(img_pil)
-                cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
+                # cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
                 cv2.imshow('OpenCV Feed',op_lang_img)
                 flag=1
                 
@@ -95,7 +95,7 @@ def executable(lang,op_lang):
             # Show to screen
             # cv2.imshow('output',op_lang_img)
             if flag==0:
-                cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
+                # cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
                 cv2.imshow('OpenCV Feed', image)
             
 

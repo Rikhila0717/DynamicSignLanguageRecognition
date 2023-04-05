@@ -1,10 +1,10 @@
 import mediapipe as mp
 import cv2
-from config import mp_drawing,mp_holistic,ASL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,ISL_DATA_PATH,sequence_length
+from modules.config import mp_drawing,mp_holistic,ASL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,ISL_DATA_PATH,sequence_length
 import boto3
 import numpy as np
 from scipy import stats
-from getCredentials import s3
+from modules.getCredentials import s3
 import pickle
 import os
 
@@ -48,14 +48,15 @@ def extract_keypoints(results):
     return np.concatenate([pose, face, lh, rh])
 
 def generate_actions(lang):
-    with open("static/"+lang+"signs.text") as f:
+    with open("../static/"+lang+"signs.text") as f:
         actions = f.read()
-    # print("from file",actions)
+    print("from file",actions)
     actions = actions[:-1]
-    # print("after slice:",actions)
+    print("after slice:",actions)
     actions = actions.split(',')
-    # print("list",actions)
+    print("list",actions)
     actions = np.array(actions)
+    print('nparrray',actions)
     return actions
 
 
@@ -92,6 +93,6 @@ def send_existing_data(lang):
                 saveLabelsToS3(res,lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
     print('{} done'.format(lang))
 
-send_existing_data('isl')
-send_existing_data('fsl')
-send_existing_data('bsl')
+# send_existing_data('isl')
+# send_existing_data('fsl')
+# send_existing_data('bsl')
