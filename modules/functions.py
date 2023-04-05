@@ -1,6 +1,6 @@
 import mediapipe as mp
 import cv2
-from config import mp_drawing,mp_holistic,s3
+from modules.config import mp_drawing,mp_holistic
 import boto3
 import numpy as np
 from scipy import stats
@@ -67,7 +67,9 @@ def prob_viz(res, actions, input_frame):
 
 
 def saveLabelsToS3(npyArray,bucket, name):
-    with s3.open('{}/{}'.format(bucket, name), 'wb') as f:
+    print(npyArray, bucket, name)
+    print("FULL PATH :", '{}/{}'.format(bucket,name))
+    with s3.open('/{}/{}'.format(bucket,name), 'wb') as f:
         f.write(pickle.dumps(npyArray))
 
 def readLabelsFromS3(bucket,name):
