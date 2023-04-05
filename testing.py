@@ -22,13 +22,13 @@ def executable(lang,op_lang):
     # Set mediapipe model 
     print("in executable",op_lang)
     if op_lang=='hi':
-        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
+        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
     elif op_lang=='te':
-        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
+        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
     elif op_lang=='ta':
-        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
+        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
     elif op_lang=='en':
-        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/IMFellEnglish-Regular.ttf',30)
+        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/IMFellEnglish-Regular.ttf',30)
     with config.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
             flag=0
@@ -77,8 +77,8 @@ def executable(lang,op_lang):
                     translated = ts.translate_text(x,from_language = 'en',to_language = op_lang)
                 else:
                     translated = x
-                # print("x= ",x)
-                # print("translated= {} type={}".format(translated,type(translated)))
+                print("x= ",x)
+                print("translated= {} type={}".format(translated,type(translated)))
                 img_pil = Image.fromarray(image)
                 draw = ImageDraw.Draw(img_pil)
                 draw.text((50, 80),  translated, font = font)

@@ -72,8 +72,8 @@ class Training:
         log_dir = os.path.join('Logs')
         tb_callback = TensorBoard(log_dir=log_dir)
         ##our model
-        Training.model.add(LSTM(64, return_sequences=True, activation='sigmoid', input_shape=(15,1662)))
-        Training.model.add(LSTM(64, return_sequences=False, activation='sigmoid'))
+        Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
+        Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
         Training.model.add(Dropout(0.2))
         Training.model.add(Dense(64, activation='sigmoid'))
         Training.model.add(Dense(32, activation='sigmoid'))
