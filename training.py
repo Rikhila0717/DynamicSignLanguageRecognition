@@ -59,7 +59,7 @@ class Training:
                 window = []
                 for frame_num in range(sequence_length):
                     # print("I'm here trying to read {} of {} of {}".format(frame_num,sequence,action))
-                    res = readLabelsFromS3(self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
+                    res = readLabelsFromS3(self.lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(self.lang,action,sequence,frame_num))
                     # res = np.load(os.path.join(self.DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
                     # print(res)
                     window.append(res)
@@ -72,8 +72,8 @@ class Training:
         log_dir = os.path.join('Logs')
         tb_callback = TensorBoard(log_dir=log_dir)
         ##our model
-        Training.model.add(LSTM(64, return_sequences=True, activation='sigmoid', input_shape=(15,1662)))
-        Training.model.add(LSTM(64, return_sequences=False, activation='sigmoid'))
+        Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
+        Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
         Training.model.add(Dropout(0.2))
         Training.model.add(Dense(64, activation='sigmoid'))
         Training.model.add(Dense(32, activation='sigmoid'))

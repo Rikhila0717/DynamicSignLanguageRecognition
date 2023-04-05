@@ -89,5 +89,5 @@ def send_existing_data(lang):
         for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
             for frame_num in range(sequence_length):
                 res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
-                saveLabelsToS3(res,lang+'-data','{}-data/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
+                saveLabelsToS3(res,lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
 
