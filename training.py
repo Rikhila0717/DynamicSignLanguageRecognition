@@ -4,7 +4,7 @@ import joblib
 import pickle
 import sys
 # sys.path.append('..')
-from modules.functions import readLabelsFromS3
+# from modules.functions import readLabelsFromS3
 
 from modules.functions import generate_actions
 from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,sequence_length
@@ -49,7 +49,7 @@ class Training:
         X = normalize(X)
         X=X.reshape(X.shape[0],15,1662)
         print(X.shape)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.05)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.20,random_state=0)
 
     def preprocessing(self):
         label_map = {label:num for num, label in enumerate(self.actions)}
@@ -74,10 +74,11 @@ class Training:
         tb_callback = TensorBoard(log_dir=log_dir)
         ##our model
         Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
-        # Training.model.add(LSTM(64, return_sequences=True, activation='tanh'))
-        Training.model.add(LSTM(64, return_sequences=False, activation='tanh',activity_regularizer=L1L2(0.01)))
+        Training.model.add(LSTM(128, return_sequences=True, activation='tanh'))
         Training.model.add(Dropout(0.2))
-        # Training.model.add(Dense(64, activation='sigmoid'))
+        Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        Training.model.add(Dense(64, activation='sigmoid'))
         Training.model.add(Dense(32, activation='sigmoid'))
         Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
 
@@ -122,11 +123,11 @@ class Training:
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-# asl_obj = Training('asl')
-# print('ASL MODEL epochs')
-# asl_obj.lstm_model()
-# print("ASL model accuracy")
-# asl_obj.predict_accuracy()
+asl_obj = Training('asl')
+print('ASL MODEL epochs')
+asl_obj.lstm_model()
+print("ASL model accuracy")
+asl_obj.predict_accuracy()
 
 # bsl_obj = Training('bsl')
 # print('BSL model epochs')
@@ -134,11 +135,11 @@ class Training:
 # print("BSL model accuracy")
 # bsl_obj.predict_accuracy()
 
-isl_obj = Training('isl')
-print('ISL model epochs')
-isl_obj.lstm_model()
-print("ISL model accuracy")
-isl_obj.predict_accuracy()
+# isl_obj = Training('isl')
+# print('ISL model epochs')
+# isl_obj.lstm_model()
+# print("ISL model accuracy")
+# isl_obj.predict_accuracy()
 
 # fsl_obj = Training('fsl')
 # print('FSL model epochs')

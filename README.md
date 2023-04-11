@@ -38,3 +38,12 @@ in each bucket:
 all signs as folders - 
 in each sign - all videos as folders
 in each video folder - all npy files -->
+
+if op_lang=='hi':
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
+    elif op_lang=='te':
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
+    elif op_lang=='ta':
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
+    elif op_lang=='en':
+        font = ImageFont.truetype('C:/Users/rikhi/projectF/FinalProject/fonts/IMFellEnglish-Regular.ttf',30)

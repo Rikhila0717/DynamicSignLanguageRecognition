@@ -97,7 +97,7 @@ class newSign:
                     np.save(npy_path, keypoints)
                     # object = s3.Object(self.lang+"-data",'')
                     # object = s3.Object(self.lang+'-data',self.sign+'/'+sequence)
-                    functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
+                    # functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
 
                     # Break gracefully
                     if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -112,5 +112,5 @@ class newSign:
 # newSign('please').capture_sign()
 # newSign('fsl','no').capture_sign()
 # newSign('asl','thanks').capture_sign()
-newSign('asl','dummy').capture_sign()
+newSign('isl','no').capture_sign()
 
