@@ -113,9 +113,9 @@ class Training:
         print(multilabel_confusion_matrix(ytrue, yhat))
         print(accuracy_score(ytrue,yhat))
 
-# obj = Training('asl')
+obj = Training('asl')
 # obj.lstm_model()
-# obj.predict_accuracy()
+obj.predict_accuracy()
 
 
 
