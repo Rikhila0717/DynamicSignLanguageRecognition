@@ -112,9 +112,9 @@ class Training:
         print(multilabel_confusion_matrix(ytrue, yhat))
         print(accuracy_score(ytrue,yhat))
 
-# obj = Training('asl')
+obj = Training('asl')
 # obj.lstm_model()
-# obj.predict_accuracy()
+obj.predict_accuracy()
 
 
 
@@ -134,11 +134,11 @@ class Training:
 # print("BSL model accuracy")
 # bsl_obj.predict_accuracy()
 
-isl_obj = Training('isl')
-print('ISL model epochs')
-isl_obj.lstm_model()
-print("ISL model accuracy")
-isl_obj.predict_accuracy()
+# isl_obj = Training('isl')
+# print('ISL model epochs')
+# isl_obj.lstm_model()
+# print("ISL model accuracy")
+# isl_obj.predict_accuracy()
 
 # fsl_obj = Training('fsl')
 # print('FSL model epochs')
