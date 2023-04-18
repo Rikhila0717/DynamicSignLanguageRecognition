@@ -42,13 +42,13 @@ class Training:
         print(X.shape)
         # print(y.shape)
         X=X.reshape(X.shape[0], (X.shape[1]*X.shape[2]))
-        print(X.shape)
+        # print(X.shape)
 
         imputer = SimpleImputer(strategy='constant',fill_value=0)
         imputer.fit_transform(X,y)
         X = normalize(X)
         X=X.reshape(X.shape[0],15,1662)
-        print(X.shape)
+        # print(X.shape)
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.20,random_state=0)
 
     def preprocessing(self):
@@ -72,12 +72,42 @@ class Training:
     def lstm_model(self):
         log_dir = os.path.join('Logs')
         tb_callback = TensorBoard(log_dir=log_dir)
-        ##our model
+        # ASL model
+        # Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
+        # Training.model.add(LSTM(128, return_sequences=True, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        # Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        # Training.model.add(Dense(64, activation='sigmoid'))
+        # Training.model.add(Dense(32, activation='sigmoid'))
+        # Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
+
+        # BSL model - NEED TO CHANGE
+        # Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
+        # Training.model.add(LSTM(128, return_sequences=True, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        # Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        # #Training.model.add(Dense(64, activation='sigmoid'))
+        # Training.model.add(Dense(32, activation='sigmoid'))
+        # Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
+
+        #ISL model
+        # Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
+        # Training.model.add(LSTM(128, return_sequences=True, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        # Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
+        # Training.model.add(Dropout(0.2))
+        # Training.model.add(Dense(64, activation='sigmoid'))
+        # Training.model.add(Dense(32, activation='sigmoid'))
+        # Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
+
+        # FSL model
         Training.model.add(LSTM(64, return_sequences=True, input_shape=(15,1662)))
         Training.model.add(LSTM(128, return_sequences=True, activation='tanh'))
         Training.model.add(Dropout(0.2))
-        Training.model.add(LSTM(64, return_sequences=False, activation='tanh'))
-        # Training.model.add(Dropout(0.2))
+        Training.model.add(LSTM(64, return_sequences=False, activation='sigmoid'))
+        Training.model.add(Dropout(0.2))
         Training.model.add(Dense(64, activation='sigmoid'))
         Training.model.add(Dense(32, activation='sigmoid'))
         Training.model.add(Dense(self.actions.shape[0], activation='softmax'))
@@ -113,9 +143,9 @@ class Training:
         print(multilabel_confusion_matrix(ytrue, yhat))
         print(accuracy_score(ytrue,yhat))
 
-obj = Training('asl')
+# obj = Training('asl')
 # obj.lstm_model()
-obj.predict_accuracy()
+# obj.predict_accuracy()
 
 
 
@@ -123,11 +153,11 @@ obj.predict_accuracy()
 # result = loaded_model.score(obj.X_test, obj.y_test)
 # print(result)
 
-asl_obj = Training('asl')
-print('ASL MODEL epochs')
-asl_obj.lstm_model()
-print("ASL model accuracy")
-asl_obj.predict_accuracy()
+# asl_obj = Training('asl')
+# print('ASL MODEL epochs')
+# asl_obj.lstm_model()
+# print("ASL model accuracy")
+# asl_obj.predict_accuracy()
 
 # bsl_obj = Training('bsl')
 # print('BSL model epochs')
@@ -141,11 +171,11 @@ asl_obj.predict_accuracy()
 # print("ISL model accuracy")
 # isl_obj.predict_accuracy()
 
-# fsl_obj = Training('fsl')
-# print('FSL model epochs')
-# fsl_obj.lstm_model()
-# print("FSL model accuracy")
-# fsl_obj.predict_accuracy()
+fsl_obj = Training('fsl')
+print('FSL model epochs')
+fsl_obj.lstm_model()
+print("FSL model accuracy")
+fsl_obj.predict_accuracy()
 
 
 

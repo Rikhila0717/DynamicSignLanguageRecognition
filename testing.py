@@ -10,6 +10,7 @@ from PIL import Image,ImageDraw,ImageFont
 
 
 def executable(lang,op_lang):
+    print("In executable")
 
     # 1. New detection variables
     sequence = []

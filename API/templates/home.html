@@ -7,14 +7,9 @@
     <script>
         var input_val;
         function get_val(){
-            console.log("Hi");
-            var ele = document.getElementsByName("input");
+            var input_val = document.querySelector('input[name="input"]:checked').value;
+            var output_val = document.querySelector('input[name="output"]:checked').value;
 
-            for(i=0; i<ele.length; i++){
-                if(ele[i].checked){
-                    input_val = ele[i].value;
-                }
-            }
             if (input_val=='asl'){
                 document.getElementById('ip_form').action = '{% url 'asl' %}';
             }
@@ -33,12 +28,13 @@
         <div id="options">
             <h3>Gesture in the sign language of your choice and translate it</h3>
             <div class="menu" id="left_menu">
-                <label for="from" class="labels">Choose a sign language<br><br></label>
+                <form id = 'ip_form' method="get">
+                    <label for="from" class="labels">Choose a sign language<br><br></label>
                 {% comment %} <select name="from" class="dropdown">
                     <option>American Sign Language(ASL)</option>
                     <option>Indian Sign Language(ISL)</option>
                 </select> {% endcomment %}
-                <form id = 'ip_form' method="get">
+                
                     <input type="radio" id="ASL" name = "input" value="asl">
                     <label for="asl">ASL</label><br>
                     <input type="radio" id="ISL" name="input" value="isl">
@@ -46,22 +42,25 @@
                     <input type="radio" id="BSL" name="input" value="bsl">
                     <label for="bsl">BSL</label><br>
                     <input type="radio" id="FSL" name="input" value="fsl">
-                    <label for="fsl">FSL</label><br>
-                   
+                    <label for="fsl">FSL</label><br>    
+                </form>
+            {% comment %} </div>
+            <div class="menu" id="right_menu"> {% endcomment %}
+                <form id = 'op_form' method="get">
                 {% comment %} <div class="menu" id="right_menu"> {% endcomment %}
                     <label for="to">Choose translation language<br><br></label>
-                        <input type="radio" id="en" name = "output" value="en">
-                        <label for="en">English</label><br>
-                        <input type="radio" id="te" name="output" value="te">
-                        <label for="te">Telugu</label><br>
-                        <input type="radio" id="hi" name="output" value="hi">
-                        <label for="hi">Hindi</label><br>
+                    <input type="radio" id="en" name = "output" value="en">
+                    <label for="en">English</label><br>
+                    <input type="radio" id="te" name="output" value="te">
+                    <label for="te">Telugu</label><br>
+                    <input type="radio" id="hi" name="output" value="hi">
+                    <label for="hi">Hindi</label><br>
                         {% comment %} <button type='button' onclick='get_val()'><input type='submit' value="GO"></button> {% endcomment %}
-                {% comment %} </div>  {% endcomment %}
-                <button type='button' onclick='get_val()'><input type='submit' value='GO'></button>
+                {% comment %} </div>  {% endcomment %}      
                 </form>
+                <button type='button' onclick='get_val()'><input type='submit' value='GO'></button>
             </div>
-            
+           
         </div>
     </body>
 </html>
