@@ -84,26 +84,15 @@ def executable(lang,op_lang):
                 draw = ImageDraw.Draw(img_pil)
                 draw.text((50, 80),  translated, font = font,fill=(0,0,0,0))
                 op_lang_img = np.array(img_pil)
-                # cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
                 cv2.imshow('OpenCV Feed',op_lang_img)
                 flag=1
                 
-                # cv2.putText(image, ' '.join(sentence), (3,30), 
-                #         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
-                # cv2.imwrite(image,op_lang_img)
-                
-                
             # Show to screen
-            # cv2.imshow('output',op_lang_img)
             if flag==0:
-                # cv2.rectangle(image, (0,0), (640, 40), (245, 117, 16), -1)
                 cv2.imshow('OpenCV Feed', image)
-            
 
             # Break gracefully
             if cv2.waitKey(10) & 0xFF == ord('q'):
                 break
         cap.release()
         cv2.destroyAllWindows()
-
-# executable('bsl')

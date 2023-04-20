@@ -15,7 +15,6 @@ from modules.getCredentials import s3
 class newSign:
 
     def __init__(self,lang,sign):
-        # self.col = mydb[lang+"_Data"]
         self.sign = sign
         self.lang = lang
 
@@ -27,15 +26,12 @@ class newSign:
             self.DATA_PATH = BSL_DATA_PATH
         elif self.lang=='fsl':
             self.DATA_PATH = FSL_DATA_PATH
-        # sys.path.append("../static")
+
         fp = open('static/'+lang+'signs.text','a')
-        # print('I opened')
         fp.write(self.sign+',')
         fp.close()
     
     def capture_sign(self):
-
-        
 
         for sequence in range(no_sequences):
             try:
@@ -80,24 +76,12 @@ class newSign:
                         
                     # NEW Export keypoints
                     keypoints = functions.extract_keypoints(results)
-                    # print(type(keypoints))
-
-                    # self.col.insert_many([
-                    #     {
-                    #     "_id": str(frame_num),
-                    #     "_path": str(sequence)+","+self.sign+","+self.lang,
-                    #     str(frame_num):keypoints,
-                    #     }
-                    # ])
-                    # print(keypoints)
-                    # print(newSign.DATA_PATH, actions[-1], str(sequence), str(frame_num))
-                    npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
+                    
+                    # npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
                     # print(npy_path)
 
-                    np.save(npy_path, keypoints)
-                    # object = s3.Object(self.lang+"-data",'')
-                    # object = s3.Object(self.lang+'-data',self.sign+'/'+sequence)
-                    # functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
+                    # np.save(npy_path, keypoints)
+                    functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
 
                     # Break gracefully
                     if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -106,11 +90,5 @@ class newSign:
         cap.release()
         cv2.destroyAllWindows()
 
-    
-# newSign('hello').capture_sign()
-# newSign('thanks').capture_sign()
-# newSign('please').capture_sign()
-# newSign('fsl','no').capture_sign()
-# newSign('asl','thanks').capture_sign()
-newSign('isl','no').capture_sign()
+
 

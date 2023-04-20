@@ -11,9 +11,10 @@ body{
   /* background-position-y: center; */
 }
 
-/* #heading1{
-  font-size: 50px;
-} */
+#body_div{
+  margin: 10 auto;
+  width:1000px;
+}
 
 #options{
   position: fixed;
@@ -88,3 +89,4 @@ body{
   fill: rgb(114, 182, 199);
   background-color: rgb(116, 154, 148);
 }
+
