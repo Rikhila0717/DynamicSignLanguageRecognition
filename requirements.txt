@@ -1,0 +1,16 @@
+python==3.9.6
+django==4.1.7
+
+mediapipe
+numpy
+pickle
+dotenv
+s3fs
+tensorflow
+keras
+sklearn
+matplotlib
+seaborn
+translators
+pillow
+

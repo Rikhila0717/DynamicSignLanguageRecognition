@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home</title>
+        <link rel="stylesheet" href=".\static\style.css">
+    </head>
+    <script>
+        var input_val;
+        function get_val(){
+            console.log("Hi");
+            var ele = document.getElementsByName("input");
+
+            for(i=0; i<ele.length; i++){
+                if(ele[i].checked){
+                    input_val = ele[i].value;
+                }
+            }
+            if (input_val=='asl'){
+                document.getElementById('ip_form').action = '{% url 'asl' %}';
+            }
+            else if (input_val=='isl'){
+                document.getElementById('ip_form').action = '{% url 'isl' %}';
+            }
+            else if (input_val=='bsl'){
+                document.getElementById('ip_form').action = '{% url 'bsl' %}';
+            }
+            else if (input_val=='fsl'){
+                document.getElementById('ip_form').action = '{% url 'fsl' %}';
+            }
+        }
+    </script>
+    <body>
+        <div id="body_div">
+        {% comment %} <h3 id='head'>SIGN LANGUAGE TRANSLATION</h3> {% endcomment %}
+        <div id="options">
+            {% comment %} <p id='heading1'>Sign Language Translation</p> {% endcomment %}
+            
+            <div class="menu" id="left_menu">
+                <label for="from" class="labels"><strong>Choose a sign language<br><br></label>
+                {% comment %} <select name="from" class="dropdown">
+                    <option>American Sign Language(ASL)</option>
+                    <option>Indian Sign Language(ISL)</option>
+                </select> {% endcomment %}
+                <form id = 'ip_form' method="get">
+                    <input type="radio" id="ASL" name = "input" value="asl">
+                    <label for="asl">American Sign Language</label><br>
+                    <input type="radio" id="ISL" name="input" value="isl">
+                    <label for="isl">Indian Sign Language</label><br>
+                    <input type="radio" id="BSL" name="input" value="bsl">
+                    <label for="bsl">British Sign Language</label><br>
+                    <input type="radio" id="FSL" name="input" value="fsl">
+                    <label for="fsl">French Sign Language</label><br>
+            </div>  
+                <div class="menu" id="right_menu">
+                    <label for="to" class="labels"><strong>Choose translation language<br><br></label>
+                        <input type="radio" id="en" name = "output" value="en">
+                        <label for="en">English</label><br>
+                        <input type="radio" id="te" name="output" value="te">
+                        <label for="te">Telugu</label><br>
+                        <input type="radio" id="hi" name="output" value="hi">
+                        <label for="hi">Hindi</label><br>
+                        {% comment %} <button type='button' onclick='get_val()'><input type='submit' value="GO"></button> {% endcomment %}
+                </div> 
+            </div>
+                <input id='button' type='submit' onclick='get_val()' value='Open Camera'>
+                </form>
+            </div>
+    </body>
+</html>

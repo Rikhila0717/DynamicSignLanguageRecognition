@@ -1,0 +1,92 @@
+body{
+  /* background-image: linear-gradient(to right,rgb(0,0,0,0),rgb(195, 171, 107),rgb(199, 114, 114)); */
+  background-image: url('A0C3D2 (3).png');
+  background-repeat: no-repeat;
+  /* background-position:200%; */
+  background-size:cover;
+  /* max-height: 80%; */
+  /* height: 50%; */
+  /* width: 100%; */
+  /* background-position-x:left; */
+  /* background-position-y: center; */
+}
+
+#body_div{
+  margin: 10 auto;
+  width:1000px;
+}
+
+#options{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 40em;
+  height: 18em;
+  margin-top: -9em;
+  margin-left: -15em;
+  /* display: flex; */
+  font-size: 20px;
+
+}
+
+#head{
+  /* font:bolder; */
+  position: fixed;
+  padding-left: 100px;
+  margin-left: 8%;
+  align-items: center;
+  padding-bottom: 100px;
+  font-family: Georgia;
+  font-weight: 900;
+  font-size: 50px;
+}
+
+.menu{
+  position: relative;
+  top: 10%;
+}
+
+/* input[type="radio"] {
+  display: none; /* Hide the default radio button */
+/* } */
+
+
+#left_menu{
+  display: inline-block;
+  /* width: 50%; */
+  /* float: left; */
+  position:relative;
+  margin-top: 120px;
+  padding-left: 10px;
+  /* marg */
+}
+
+#right_menu{
+  display: inline-block;
+  position: relative;
+  /* width: 25%; */
+  padding: 10px;
+  margin-top: 100px;
+  /* margin-block-end: 40px; */
+  margin-left: 100px;
+  /* margin-bottom:100px; */
+  /* float: right; */
+}
+
+#button{
+  position: absolute;
+  margin-top: 450px;
+  margin-left: 550px;
+  height: 80px;
+  width: 150px;
+  margin-bottom: 150px;
+  padding-bottom: 20px;
+  font-family: Georgia;
+  font-size: 22px;
+  padding: 1.2px;
+  border-radius: 10px;
+  border-style: groove;
+  fill: rgb(114, 182, 199);
+  background-color: rgb(116, 154, 148);
+}
+
