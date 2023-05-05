@@ -18,22 +18,21 @@ def executable(lang,op_lang):
     predictions = []
     threshold = 0.5
     actions = functions.generate_actions(lang)
-    model = load_model('C:/Users/wysha/Desktop/projectF/FinalProject/'+lang+'model.h5')
+    model = load_model('FinalProject/'+lang+'model.h5')
     cap = cv2.VideoCapture(0)
     # Set mediapipe model 
     print("in executable",op_lang)
     if op_lang=='hi':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
+        font = ImageFont.truetype('FinalProject/fonts/TiroDevanagariHindi-Regular.ttf',30)
     elif op_lang=='te':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
+        font = ImageFont.truetype('FinalProject/fonts/NotoSansTelugu-VariableFont_wdth,wght.ttf',30)
     elif op_lang=='ta':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
+        font = ImageFont.truetype('FinalProject/fonts/NotoSansTamil-VariableFont_wdth,wght.ttf',30)
     elif op_lang=='en':
-        font = ImageFont.truetype('C:/Users/wysha/Desktop/projectF/FinalProject/fonts/IMFellEnglish-Regular.ttf',30)
+        font = ImageFont.truetype('FinalProject/fonts/IMFellEnglish-Regular.ttf',30)
     with config.mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
             flag=0
-
             # Read feed
             ret, frame = cap.read()
 

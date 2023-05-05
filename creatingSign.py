@@ -1,16 +1,8 @@
 import cv2
 import numpy as np
 import os
-from matplotlib import pyplot as plt
-import time
-import mediapipe as mp
-from sklearn.model_selection import train_test_split 
-from tensorflow.keras.utils import to_categorical
-from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH, mp_holistic, mp_drawing, no_sequences, sequence_length
+from modules.config import ASL_DATA_PATH,ISL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH, mp_holistic, no_sequences, sequence_length
 from modules import functions
-import pickle
-from modules.getCredentials import s3
-# from s3fs.core import S3FileSystem
 
 class newSign:
 
@@ -33,6 +25,7 @@ class newSign:
     
     def capture_sign(self):
 
+        #only for creating local directories for signs
         for sequence in range(no_sequences):
             try:
                 os.makedirs(os.path.join(self.DATA_PATH, self.sign, str(sequence)))
@@ -77,11 +70,15 @@ class newSign:
                     # NEW Export keypoints
                     keypoints = functions.extract_keypoints(results)
                     
-                    # npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
+                    #for creating a local copy of the sign
+                    npy_path = os.path.join(self.DATA_PATH, self.sign, str(sequence), str(frame_num))
                     # print(npy_path)
 
-                    # np.save(npy_path, keypoints)
-                    functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
+                    #for saving the sign in the local system
+                    np.save(npy_path, keypoints)
+
+                    #to save the sign in Amazon s3
+                    # functions.saveLabelsToS3(keypoints,self.lang+'-data','{}-data/{}/{}/{}.pkl'.format(self.lang,self.sign,sequence,frame_num))
 
                     # Break gracefully
                     if cv2.waitKey(10) & 0xFF == ord('q'):
@@ -91,4 +88,6 @@ class newSign:
         cv2.destroyAllWindows()
 
 
+#to create a sign, pass the language name and the sign name and call the capture_sign() method
 
+#newSign(lang_name,sign_name).capture_sign()

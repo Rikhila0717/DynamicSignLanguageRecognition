@@ -1,6 +1,5 @@
 import os
 import mediapipe as mp
-import boto3
 
 
 # Path for exported data, numpy arrays

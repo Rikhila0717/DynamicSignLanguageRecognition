@@ -1,9 +1,6 @@
-import mediapipe as mp
 import cv2
 from modules.config import mp_drawing,mp_holistic,ASL_DATA_PATH,BSL_DATA_PATH,FSL_DATA_PATH,ISL_DATA_PATH,sequence_length
-import boto3
 import numpy as np
-from scipy import stats
 from modules.getCredentials import s3
 import pickle
 import os
@@ -48,7 +45,7 @@ def extract_keypoints(results):
     return np.concatenate([pose, face, lh, rh])
 
 def generate_actions(lang):
-    with open("static/"+lang+"signs.text") as f:
+    with open("../static/"+lang+"signs.text") as f:
         actions = f.read()
     actions = actions[:-1]
     actions = actions.split(',')
@@ -89,6 +86,4 @@ def send_existing_data(lang):
                 saveLabelsToS3(res,lang+'data-set','{}data-set/{}/{}/{}.pkl'.format(lang,action,sequence,frame_num))
     print('{} done'.format(lang))
 
-# send_existing_data('isl')
-# send_existing_data('fsl')
-# send_existing_data('bsl')
+
